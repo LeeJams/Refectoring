@@ -1,4 +1,14 @@
-import json from "./jsonData.js";
+import json from "./JsonData.js";
+
+/* 
+연극을 외주로 받아서 공연하는 극단.
+공연 요청이 들어오면 연극의 장르와 관객 규모를 기준으로 비용을 책정한다.
+
+현재 비극과 희극만 공연하고 공연료와 별개로 포인트를 지급해 다음 의뢰 시 공연료를 할인 받을 수 있다.
+
+현재 코드는 장르를 추가하는 등 새로운 요구사항이 생길 시 문제를 야기한다.
+연극 장르와 공연료 정책이 달라질 때마다 statement() 함수를 수정해야 한다.
+*/
 
 function statement(invoice, plays) {
   let totalAmount = 0;
