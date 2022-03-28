@@ -1,14 +1,4 @@
-import json from "./JsonData.js";
-
-/* 
-반복문을 파이프라인으로 바꾸기
-*/
-
-function statement(invoice, plays) {
-  return rederPlainText(createStatementData(invoice, plays));
-}
-
-function createStatementData(invoice, plays) {
+export default function createStatementData(invoice, plays) {
   const statementData = {};
   statementData.customer = invoice.customer;
   statementData.performances = invoice.performances.map(enrichPerformance);
@@ -69,35 +59,3 @@ function createStatementData(invoice, plays) {
     return data.performances.reduce((acc, cur) => acc + cur.volumeCredits, 0);
   }
 }
-
-function rederPlainText(data) {
-  let result = `청구 내역 (고객명: ${data.customer})\n`;
-
-  for (let perf of data.performances) {
-    result += ` ${perf.play.name}: ${usd(perf.amount)} (${perf.audience}석)\n`;
-  }
-
-  result += `총액: ${usd(data.totalAmount)}\n`;
-  result += `적립 포인트: ${data.totalVolumeCredits}점\n`;
-  return result;
-
-  // 여기서부터 중첩 함수
-
-  function usd(aNumber) {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 2,
-    }).format(aNumber / 100);
-  }
-}
-
-console.log(statement(json.invoice, json.plays));
-/* 
-청구 내역 (고객명: BigCo)
- Hamlet: $650.00 (55석)
- As You Like It: $490.00 (35석)
- Othello: $500.00 (40석)
-총액: $1,640.00
-적립 포인트: 47점
-*/
