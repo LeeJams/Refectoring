@@ -1,10 +1,5 @@
 export default (shoppingItemPrices, orderList) => {
-  let totalOrderPrice = 0;
-  for (const item of orderList) {
-    totalOrderPrice += getItemPrice(shoppingItemPrices, item[0]) * item[1];
-  }
-
-  return totalOrderPrice;
+  return orderList.reduce((acc, cur) => acc + cur[1] * getItemPrice(shoppingItemPrices, cur[0]), 0);
 };
 
 const getItemPrice = (shoppingItemPrices, item) => {
